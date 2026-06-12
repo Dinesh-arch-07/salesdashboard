@@ -16,3 +16,7 @@ def load_data():
 
     except:
         return pd.read_csv("sales.csv")
+    import pandas as pd
+
+def load_data():
+    return pd.read_csv("sales.csv")
