@@ -1,23 +1,18 @@
-import mysql.connector
 import pandas as pd
+import mysql.connector
 
 def load_data():
-    conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="YOUR_PASSWORD",
-        database="sales_dashboard"
-    )
+    try:
+        conn = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="DP77@dpdbs!@",
+            database="sales_dashboard"
+        )
 
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM sales")
+        df = pd.read_sql("SELECT * FROM sales", conn)
+        conn.close()
+        return df
 
-    rows = cursor.fetchall()
-
-    # FORCE CLEAN COLUMN NAMES
-    columns = [i[0].strip() for i in cursor.description]
-
-    df = pd.DataFrame(rows, columns=columns)
-
-    conn.close()
-    return df
+    except:
+        return pd.read_csv("sales.csv")
